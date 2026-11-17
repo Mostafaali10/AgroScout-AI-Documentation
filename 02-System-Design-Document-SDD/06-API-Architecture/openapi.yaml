@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: AgroScout AI REST API
+  description: Official REST API specification for the AgroScout precision agriculture platform.
+  version: 1.0.0
+servers:
+  - url: https://api.agroscout.ai/v1
+    description: Production API Server
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate user and receive JWT tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required: [email, password]
+      responses:
+        '200':
+          description: Successful login
+  /farms:
+    get:
+      summary: List user farms
+      responses:
+        '200':
+          description: List of registered farms
+  /ai/diagnose:
+    post:
+      summary: Request crop leaf disease diagnosis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                parcel_id:
+                  type: string
+                image_url:
+                  type: string
+                crop_type:
+                  type: string
+              required: [parcel_id, image_url]
+      responses:
+        '200':
+          description: Diagnosis result
